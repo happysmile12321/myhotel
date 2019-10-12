@@ -7310,7 +7310,7 @@ function Calendar(element, instanceOptions) {
 			}
 		}
 
-		// iterate up a view's spec ancestor chain util we find a class to instantiate
+		// iterate up a view's spec ancestor chain utils we find a class to instantiate
 		while (viewType && !viewClass) {
 			viewOptions = {}; // only for this specific view in the ancestry
 			processSpecInput(fcViews[viewType]); // $.fullCalendar.views, lower precedence

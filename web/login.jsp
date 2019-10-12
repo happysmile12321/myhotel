@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%--<%@page import="jiudian.util.Util"%>--%>
+<%--<%@page import="jiudian.utils.Util"%>--%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </form>
 
                 <p id="nav">
-                    <a class="pull-right" href="<%=basePath%>files/zcuser/zcuseradd.jsp" title="Sign Up">注册账号</a>
+                    <a class="pull-right" href="<%=basePath%>/ma/jumpToRegister.action" title="Sign Up">注册账号</a>
                 </p>
 
 

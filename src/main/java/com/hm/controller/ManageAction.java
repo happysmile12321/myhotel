@@ -1,84 +1,95 @@
 package com.hm.controller;
 
-import com.hm.dao.user.UserDao;
 import com.hm.pojo.User;
+import com.hm.service.userservice.IUserService;
+import com.hm.utils.DateSaveInDB;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
-import java.util.Date;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
-
-
-
+import java.io.IOException;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/ma")
 public class ManageAction {
-
 	private static final long serialVersionUID = -4304509122548259589L;
-
-	private UserDao userDao;
-
-	private String url = "./";
-
-	public UserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-
-	
-	
-	
-//登入请求
+	@Autowired
+	private IUserService userService;
+	//登陆method
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
-	public String login(User user, ModelMap modelMap) throws IOException {
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println("登录成功!!!");
-		modelMap.addAttribute("user",user);
-		/*HttpServletRequest request = ServletActionContext.getRequest();
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String role = request.getParameter("role");
-		User user = userDao.selectBean(" where username = '" + username
-				+ "' and password= '" + password + "' and role= "+role+" and userlock=0 ");
-		if (user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			this.setUrl("index.jsp");
-			return "redirect";
-		} else {
-			HttpServletResponse response = ServletActionContext.getResponse();
+	public String login(User user, ModelMap modelMap,HttpServletResponse response) throws IOException {
+		//封装pojo对象，传给userservice
+		User loginUser = new User();
+		loginUser.setUsername(user.getUsername());
+		loginUser.setPassword(user.getPassword());
+		loginUser.setRole(user.getRole());
+		//model层携带数据
+		//user作为最初的参数绑定的参数
+		user = userService.login(loginUser);
+		if(user!=null){
+			modelMap.addAttribute("user",user);
+			return "index";
+		}else{
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("text/html; charset=utf-8");
 			response
 					.getWriter()
 					.print(
 							"<script language=javascript>alert('用户名或者密码错误，或者是用户不存在');window.location.href='login.jsp';</script>");
-		}*/
-		return "forward:/index.jsp";
+			return "forward:/login.jsp";
+		}
 	}
-	
+
+	//跳转到注册页面method,并携带注册Handler的路径到form表单
+	@RequestMapping(value = "/jumpToRegister")
+	public String jumpToRegister(ModelMap modelMap){
+		//添加注册jsp post提交路径
+		modelMap.addAttribute("url","/ma/register.action");
+		return "zcuser/zcuseradd";
+	}
+
+	//注册method
+	@RequestMapping(value = "/register",method = RequestMethod.POST)
+	public String register(User user, HttpServletResponse response, ModelMap modelMap, HttpServletRequest request) throws IOException {
+		System.out.println(user);
+		//设置注册时间
+		user.setCreatetime(new Date());
+		//用户注册
+		Integer userID = userService.register(user);
+		if(userID==0){
+			//System.out.println("注册失败");
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("text/html; charset=utf-8");
+			modelMap.addAttribute("errorMessage","注册失败!!!");
+			response.getWriter().print(
+					"<script language=javascript>alert('errorMessage');</script>"
+			);
+
+			return "zcuser/zcuseradd";
+		}else {
+			//System.out.println("注册成功");
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("text/html; charset=utf-8");
+			response
+					.getWriter()
+					.print(
+							"<script language=javascript>alert('操作成功');window.location.href='method!userlist';</script>");
+
+			return "forward:/login.jsp";
+		}
+	}
+
+
+
+
+
 /*
 //用户退出
 	public String loginout() {
@@ -160,6 +171,8 @@ public class ManageAction {
 
 	}
 //跳转到添加用户页面
+
+//files/zcuser/zcuseradd.jsp 注册用户跑到这个表单注册
 	public String useradd() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute("url", "method!useradd2");
@@ -167,6 +180,9 @@ public class ManageAction {
 		this.setUrl("user/useradd.jsp");
 		return SUCCESS;
 	}
+	*//**
+	 * 普通用户注册
+
 //添加用户操作
 	public void useradd2() throws IOException {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -203,8 +219,9 @@ public class ManageAction {
 							"<script language=javascript>alert('操作失败，该用户名已经存在');window.location.href='method!userlist';</script>");
 		}
 	}
-	
-	
+	 */
+	/*
+
 	//跳转到更新用户页面
 	public String userupdate() {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -252,9 +269,9 @@ public class ManageAction {
 				.print(
 						"<script language=javascript>alert('操作成功');window.location.href='method!userlist';</script>");
 	}
-	
-	
-	
+
+
+
 	//跳转到查看用户页面
 	public String userupdate3() {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -265,67 +282,19 @@ public class ManageAction {
 		this.setUrl("user/userupdate3.jsp");
 		return SUCCESS;
 	}
-	
-	*//**
-	 * 普通用户注册
-	 *//*
-	//跳转到添加用户页面
-	public String zcuseradd() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		request.setAttribute("url", "method!zcuseradd2");
-		request.setAttribute("title", "普通用户添加");
-		this.setUrl("zcuser/zcuseradd.jsp");
-		return SUCCESS;
-	}
-//添加用户操作
-	public void zcuseradd2() throws IOException {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=utf-8");
-		String username = request.getParameter("username");
-		String lianxifangshi = request.getParameter("lianxifangshi");
-		String truename = request.getParameter("truename");
-		String xingbie = request.getParameter("xingbie");
-		String password = request.getParameter("password");
-		User bean = userDao.selectBean(" where username='"+username+"' and userlock=0 ");
-		if(bean==null){
-			bean = new User();
-			bean.setUsername(username);
-			bean.setCreatetime(new Date());
-			bean.setLianxifangshi(lianxifangshi);
-			bean.setPassword(password);
-			bean.setRole(0);
-			bean.setTruename(truename);
-			bean.setXingbie(xingbie);
-			userDao.insertBean(bean);
-			response
-					.getWriter()
-					.print(
-							"<script language=javascript>alert('操作成功');window.location.href='login.jsp';</script>");
-		}else{
-			response
-					.getWriter()
-					.print(
-							"<script language=javascript>alert('操作失败，该用户名已经存在，请再次注册');window.location.href='login.jsp';</script>");
-		}
-	}
-	
+	*/
+	/*
 	*//**
 	 * 将fenleiDao注入到MangeAction
 	 * 
 	 *//*
-	
 	private FenleiDao fenleiDao;
-
 	public FenleiDao getFenleiDao() {
 		return fenleiDao;
 	}
-
 	public void setFenleiDao(FenleiDao fenleiDao) {
 		this.fenleiDao = fenleiDao;
 	}
-	
 	//客房分类管理列表
 	public String fenleilist() {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -340,14 +309,8 @@ public class ManageAction {
 			sb.append(" and ");
 			request.setAttribute("leixing", leixing);
 		}
-
-		
-		
-		
 		sb.append("  deletestatus=0 order by id desc ");
 		String where = sb.toString();
-
-
 		int currentpage = 1;
 		int pagesize = 10;
 		if (request.getParameter("pagenum") != null) {
@@ -363,7 +326,6 @@ public class ManageAction {
 		request.setAttribute("title", "客房分类管理");
 		this.setUrl("fenlei/fenleilist.jsp");
 		return SUCCESS;
-
 	}
 //跳转到添加客房分类页面
 	public String fenleiadd() {
@@ -1069,4 +1031,5 @@ public class ManageAction {
 		return SUCCESS;
 
 	}*/
+
 }

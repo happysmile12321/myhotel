@@ -21,8 +21,21 @@ public class User {
 	private String lianxifangshi;//联系方式
 	
 	private int userlock;//用户状态 0表示正常状态 1表示删除状态
-	
-	
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", xingbie='" + xingbie + '\'' +
+				", password='" + password + '\'' +
+				", createtime=" + createtime +
+				", role=" + role +
+				", truename='" + truename + '\'' +
+				", lianxifangshi='" + lianxifangshi + '\'' +
+				", userlock=" + userlock +
+				'}';
+	}
 
 	public int getUserlock() {
 		return userlock;
@@ -51,6 +64,7 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
+
 
 	public void setPassword(String password) {
 		this.password = password;

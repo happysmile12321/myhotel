@@ -9,6 +9,18 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 
+
+    <!--配置全局的上下文,让Spring容器启动起来  -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <!--解决post中文乱码问题-->
      
     <filter>
