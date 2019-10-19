@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.mapper.user.UserMapper">
+
+    <select id="selectUser" parameterType="com.hm.pojo.User" resultType="com.hm.pojo.User">
+        select * from t_user where username = #{username} and password = #{password} and role = #{role};
+    </select>
+
+
+    <insert id="insertUser" parameterType="com.hm.pojo.User">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_user (createtime,lianxifangshi,password,role,truename,userlock,username,xingbie)
+        VALUES(#{createtime},#{lianxifangshi},#{password},#{role},#{truename},0,#{username},#{xingbie});
+    </insert>
+
+    <select id="selectUserByUserName" parameterType="String" resultType="com.hm.pojo.User">
+        SELECT * FROM t_user WHERE username = #{username};
+    </select>
+
+    <select id="selectUserByUserName_PassWord_UserLock" parameterType="com.hm.pojo.User" resultType="com.hm.pojo.User">
+        SELECT * FROM t_user WHERE username = #{username} AND PASSWORD = #{password}  AND userlock = #{userlock};
+    </select>
+
+    <update id="updatePassWordByUserName" parameterType="com.hm.pojo.User">
+        UPDATE t_user SET PASSWORD = #{password} WHERE username = #{username};
+    </update>
+
+</mapper>
