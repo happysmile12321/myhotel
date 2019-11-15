@@ -1,6 +1,8 @@
 ### 项目说明  
 该项目是基于ssm，对一个2017年github项目的升级  
 
+> [原项目地址](https://github.com/Cassiexyq/NIIT )
+
 > 先保留，等到更新完成再详细讲解。  
 
 ### 项目进度  
