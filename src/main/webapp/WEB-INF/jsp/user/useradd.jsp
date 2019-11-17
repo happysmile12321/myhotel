@@ -106,7 +106,7 @@ function checkform()
       <tr>
         <td width="9" background="images/tab_12.gif">&nbsp;</td>
         <td bgcolor="#f3ffe3">
-         <form action="<%=basePath%>${url }" method="post" onsubmit="return checkform()">
+         <form action="<%=basePath%>${url}" method="post" onsubmit="return checkform()">
         <table width="99%" border="1" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" >
           
           <tr>

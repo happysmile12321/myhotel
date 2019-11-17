@@ -69,7 +69,7 @@
                     </a>
                     <ul class="dropdown-menu profile animated fadeIn">
                         <li>
-                            <a target="mainframe" href="method!changepwd">
+                            <a target="mainframe" href="<%=basePath%>/ma/jumpTochangepwd.action">
                                 <i class="fa fa-wrench"></i>                                        密码更新
                             </a>
                         </li>
@@ -122,29 +122,29 @@
                     <ul class="sub-menu" style="display:block" >
                         <c:if test="${user.role==1}">
 
-                            <li> <a href="<%=basePath%>files/user/password.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpTochangepwd.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">修改密码</span>
                             </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/user/userlist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToUserList.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">用户管理</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/fenlei/fenleilist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToKefangFenleiManage.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">客房分类管理</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/kaifang/kaifanglist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToKefangXinxiManage.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">客房信息管理</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/kefang/kefanglist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToKaifangMangage.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">开房管理</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/tuifang/tuifanglist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToTuifangManage.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">退房管理</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/kfjilu/kfjilulist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToKaifangjiluChaxun.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">开房记录查询</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>files/ydjilu/ydjilulist.jsp" target="mainframe">
+                            <li> <a href="<%=basePath%>/ma/jumpToYudingjiluChaxun.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">预定记录查询</span>   </a>
                             </li>
                         </c:if>
@@ -153,11 +153,8 @@
                             <li> <a href="<%=basePath%>/ma/jumpTochangepwd.action" target="mainframe">
                                 <span style="font-size: 15px;;font-weight: bold;">修改密码</span>   </a>
                             </li>
-                            <li> <a href="<%=basePath%>/ma/jumpToyuding_User.action" target="mainframe">
-                                <span style="font-size: 15px;;font-weight: bold;">客房预定</span>   </a>
-                            </li>
-                            <li> <a href="<%=basePath%>files/ydjilu/ydjilulist.jsp" target="mainframe">
-                                <span style="font-size: 15px;;font-weight: bold;">预定记录查询</span>   </a>
+                            <li> <a href="<%=basePath%>/ma/yudinglist_user.action" target="mainframe">
+                                <span style="font-size: 15px;;font-weight: bold;">客房预订</span>   </a>
                             </li>
                         </c:if>
                     </ul>

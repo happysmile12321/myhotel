@@ -77,7 +77,7 @@ a:active {
   <tr>
     <td>
     <form action="${url }" method="post">
-   &nbsp;&nbsp;&nbsp; <a href="${url2 }add"><span style="font-weight: bold;font-size: 22px;">添加新用户</span></a></br></br>
+   &nbsp;&nbsp;&nbsp; <a href="<%=basePath%>/ma/jumpToAddUser.action"><span style="font-weight: bold;font-size: 22px;">添加新用户</span></a></br></br>
     &nbsp;&nbsp;&nbsp;
     用户名：<input type="text"  name="username" value="${username }" /> 
     <input type="submit" value="查询" /></br>
@@ -93,6 +93,7 @@ a:active {
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">性别</div></td>
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">真实姓名</div></td>
             <td height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">联系方式</div></td>
+            <td height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">角色</div></td>
             <td width="20%" height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">操作</div></td>
           </tr>
           
@@ -100,17 +101,21 @@ a:active {
           <tr>
            
             <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.username }</div></td>
-             <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.xingbie }</div></td>
+            <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.xingbie }</div></td>
             <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.truename }</div></td>
             <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.lianxifangshi }</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">
+                <c:if test="${bean.role==1}"><span style="color:red"><c:out value="管理员"></c:out></span></c:if>
+                <c:if test="${bean.role==0}"><c:out value="普通用户"></c:out></c:if>
+            </div></td>
             <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">
             		<a href="${url2 }update3?id=${bean.id }">查看</a>
 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         	<a href="${url2 }update?id=${bean.id }">修改</a>
+         	<a href="<%=basePath%>/ma/jumpToUserUpdate.action?id=${bean.id}">修改</a>
 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           			<a href="${url2 }delete?id=${bean.id }" onclick=" return confirm('确定要删除吗?'); ">删除</a>
+           			<a href="<%=basePath%>/ma/userDelete.action?id=${bean.id}" onclick=" return confirm('确定要删除吗?'); ">删除</a>
             </div></td>
             
             </tr>

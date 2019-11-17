@@ -82,49 +82,39 @@ a:active {
    			</select>
     <input type="submit" value="查询" />
     </form>
-    
+
+
+
+
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="9" background="images/tab_12.gif">&nbsp;</td>
         <td bgcolor="#f3ffe3"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" >
           <tr>
-           
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">客房类型</div></td>
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">客房价格</div></td>
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">房间编号</div></td>
             <td width="20%" height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">操作</div></td>
           </tr>
-          
           <c:forEach items="${list}" var="bean">
           <tr>
-           
             <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.leixing}</div></td>
              <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.jiage }</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fangjianhao }</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.id }</div></td>
             <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">
-         			<a href="method!yudingupdate3?id=${bean.id }">查看</a>
+              <a href="#">查看</a>
          			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         	        <a href="${url2 }update?id=${bean.id }">预定</a>
-			
-        
-
-         
+              <a href="<%=basePath%>/ma/jumpToyuding_User.action?kefangid=${bean.fenlei.id }">预定</a>
             </div></td>
-            
             </tr>
+
           </c:forEach>
-          
           <tr>
-           
             <td height="18" bgcolor="#FFFFFF" class="STYLE2" colspan="7">
             <div align="center" class="STYLE2 STYLE1">
             ${pagerinfo }
             </div></td>
-            
-            
             </tr>
-          
-          
         </table></td>
         <td width="9" background="images/tab_16.gif">&nbsp;</td>
       </tr>

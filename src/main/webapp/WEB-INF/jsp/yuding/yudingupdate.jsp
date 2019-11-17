@@ -112,7 +112,7 @@ function checkform()
       <tr>
         <td width="9" background="images/tab_12.gif">&nbsp;</td>
         <td bgcolor="#f3ffe3">
-         <form action="${url }?id=${bean.id }" method="post" onsubmit="return checkform()">
+         <form action="<%=basePath%>${url }?id=${bean.id }" method="post" onsubmit="return checkform()">
         <table width="99%" border="1" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" >
 		 <tr>
             <td width="30%" height="26" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">
@@ -121,7 +121,7 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-                <input  type="text" name="truename"  id='truenameid'  size="22"  /><span style="color: red;">*</span>
+                <input  type="text" name="truename"  id='truenameid'  size="22" value="${bean.truename}"  /><span style="color: red;">*</span>
             </div></td>
            
           </tr>
@@ -132,7 +132,7 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-            	 <input  type="text" name="yudingidcard"  id='yudingidcardid'  size="22"  /><span style="color: red;">*</span>
+            	 <input  type="text" name="yudingidcard"  id='yudingidcardid'  size="22"  value="${bean.yudingidcard}"/><span style="color: red;">*</span>
             </div></td>
            
     
@@ -145,7 +145,10 @@ function checkform()
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
             	 <select name="xingbie" style="width:160px">
-            	 	<option value="男">男</option>
+                     <c:if test="${bean.xingbie=='男'}" >
+                         <option value="男">男</option>
+                     </c:if>
+
             	 	<option value="女">女</option>
             	 </select><span style="color: red;">*</span>
             </div></td>
@@ -159,7 +162,7 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-             <input  type="text" name="lianxifangshi"  id='lianxifangshiid'  size="22"  /><span style="color: red;">*</span>
+             <input  type="text" name="lianxifangshi"  id='lianxifangshiid'  size="22" value="${bean.lianxifangshi}" /><span style="color: red;">*</span>
             </div></td>
            
           </tr>
@@ -171,7 +174,7 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-            <textarea rows="3" cols="18" name="beizhu"  id='beizhuid' ></textarea>
+            <textarea rows="3" cols="18" name="beizhu"  id='beizhuid' > ${bean.beizhu}</textarea>
             </div></td>
            
           </tr>
@@ -183,8 +186,8 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1"> 
-           <input onclick="javascript:fPopCalendar(yudingtimeid,yudingtimeid); return false;"  name="yudingtime" id="yudingtimeid"/>
-           <span style="color: red;">*</span>
+           <input onclick="javascript:fPopCalendar(yudingtimeid,yudingtimeid); return false;"  name="yudingtime" id="yudingtimeid" value="${bean.yudingtime}"/>
+                <span style="color: red;">*</span>
             </div></td>
            
           </tr>

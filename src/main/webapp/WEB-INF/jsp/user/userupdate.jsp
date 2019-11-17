@@ -104,16 +104,18 @@ function checkform()
       <tr>
         <td width="9" background="images/tab_12.gif">&nbsp;</td>
         <td bgcolor="#f3ffe3">
-         <form action="${url }?id=${bean.id }" method="post" onsubmit="return checkform()">
+         <form action="<%=basePath%>${url}" method="post" onsubmit="return checkform()">
+          <%--   <form action="<%=basePath%>${url}?id=${bean.id}" method="post" onsubmit="return checkform()">--%>
         <table width="99%" border="1" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" >
 		 <tr>
-            <td width="30%" height="26" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">
+             <input value="${id}" name="id" style="display: none">
+             <td width="30%" height="26" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">
            用户名：
             </div>
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-           <input  type="text" name="username"  id='usernameid'  size="30" value="${bean.username }" /><span style="color: red;">*</span>
+           <input  type="text" name="username"  id='usernameid'  size="30"  /><span style="color: red;">*</span>
             </div></td>
            
           </tr>
@@ -125,8 +127,8 @@ function checkform()
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
             <select name="xingbie" id="xingbieid">
-            	<option value="男" <c:if test="${bean.xingbie == '男'}">selected</c:if> >男</option>
-            	<option value="女" <c:if test="${bean.xingbie == '女'}">selected</c:if> >女</option>
+            	<option value="男" selected>男</option>
+            	<option value="女" selected>女</option>
             </select><span style="color: red;">*</span>
             </div></td>
            
@@ -139,7 +141,7 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-           <input  type="text" name="truename"  id='truenameid'  size="30" value="${bean.truename }" /><span style="color: red;">*</span>
+           <input  type="text" name="truename"  id='truenameid'  size="30" /><span style="color: red;">*</span>
             </div></td>
            
           </tr>
@@ -151,7 +153,7 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-           <input  type="text" name="lianxifangshi"  id='lianxifangshiid'  size="30" value="${bean.lianxifangshi }" /><span style="color: red;">*</span>
+           <input  type="text" name="lianxifangshi"  id='lianxifangshiid'  size="30" /><span style="color: red;">*</span>
             </div></td>
            
           </tr>

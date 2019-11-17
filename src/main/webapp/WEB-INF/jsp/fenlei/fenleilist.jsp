@@ -5,7 +5,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<c:set value="${pageContext.request.contextPath}" var="path" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -48,12 +48,43 @@ a:active {
 	color: #FF0000;
 	text-decoration: none;
 }
-.STYLE7 {font-size: 12}
 
 -->
 </style>
+    <%--从内部向外部索要资源--%>
+   <script type="text/javascript" src="${path}/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+                    /*利用ajax异步刷新请求后台数据*/
+                            $.ajax({
+                                url:"http://localhost:8080/javaHM_ssm/ma/ajax_selectRoomType.action",
+                                type:"post",
+                                dataType:"json",
+                                data:{"":""},
+                                success:function (data) {
+                                   // alert(data.leixing)
+                                    $("#roomType").prepend("<option value='0'>请选择</option>");
+                                    $.each(data,function (index,res) {
+                                        var roomType = data[index].leixing;
+                                        $("#roomType").append("<option value='data[index].leixing'>"+roomType+"</option>");
+                                    })
+
+                        },
+                        error:function () {
+                            alert("错误！")
+                        }
+                    });
 
 
+
+
+
+
+
+
+        });
+    </script>
 </head>
 
 <body>
@@ -75,11 +106,8 @@ a:active {
     <form action="${url }" method="post">
     &nbsp;&nbsp;&nbsp;<a href="${url2 }add"><span style="font-weight: bold;font-size: 22px;">添加新客房分类</span></a><br/><br/>
     &nbsp;&nbsp;&nbsp;
-   房间类型：<select name="leixing"  style="width:150">
-   				<option value="">全部</option>
-   				<c:forEach items="${leixinglist}" var="bean">
-   				<option value="${bean.leixing }" <c:if test="${bean.leixing==leixing}">selected</c:if>>${bean.leixing }</option>
-   				</c:forEach>
+   房间类型：<select name="leixing" id="roomType">
+   				<%--<option value="" selected >全部</option>--%>
    			</select>
     <input type="submit" value="查询" />
     </form>
@@ -131,6 +159,7 @@ a:active {
   </tr>
   
 </table>
+
 </body>
 </html>
 

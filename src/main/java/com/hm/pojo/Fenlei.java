@@ -4,6 +4,16 @@ import java.util.Date;
 
 //房间分类表
 public class Fenlei {
+	@Override
+	public String toString() {
+		return "Fenlei{" +
+				"id=" + id +
+				", leixing='" + leixing + '\'' +
+				", jiage=" + jiage +
+				", deletestatus=" + deletestatus +
+				", createtime=" + createtime +
+				'}';
+	}
 
 	private int id;//主键
 	

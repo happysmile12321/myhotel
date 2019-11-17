@@ -29,4 +29,25 @@
         UPDATE t_user SET PASSWORD = #{password} WHERE username = #{username};
     </update>
 
+    <select id="selectUserByID" parameterType="Integer" resultType="com.hm.pojo.User">
+        SELECT * FROM t_user WHERE id=#{id};
+    </select>
+
+    <select id="selectUsers"  resultType="com.hm.pojo.User">
+        SELECT * FROM t_user;
+    </select>
+
+    <select id="selectUserByUserName_UserRole" resultType="com.hm.pojo.User">
+        SELECT * FROM t_user WHERE username= #{username} AND role=#{role};
+    </select>
+
+    <update id="updateUser" parameterType="com.hm.pojo.User">
+        UPDATE t_user SET lianxifangshi = #{lianxifangshi}
+, truename = #{truename}  , username = #{username} , xingbie=#{xingbie}
+WHERE id = #{id};
+    </update>
+
+    <delete id="deleteUser" parameterType="Integer">
+        DELETE FROM t_user WHERE id = #{id};
+    </delete>
 </mapper>

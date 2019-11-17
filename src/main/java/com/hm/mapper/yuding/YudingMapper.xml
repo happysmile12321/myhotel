@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.mapper.yuding.YudingMapper">
+
+    <select id="selectYuding" parameterType="Integer" resultMap="userYudingresultMap">
+        SELECT t_fenlei.`leixing`,t_fenlei.`jiage`,t_fenlei.`id` FROM t_user,t_fenlei
+WHERE t_user.`id`=#{id};
+    </select>
+
+    <resultMap id="userYudingresultMap" type="com.hm.pojo.UserYuding">
+        <id column="id" property="fenlei.id"></id>
+        <result column="leixing" property="fenlei.leixing"></result>
+        <result column="jiage" property="fenlei.jiage"></result>
+    </resultMap>
+
+
+    <select id="selectYudingByKefangIdAndUserID"  resultType="com.hm.pojo.Yuding">
+       SELECT * FROM t_yuding WHERE  kefangid=#{kefangid} AND userid=#{userid} ;
+    </select>
+</mapper>

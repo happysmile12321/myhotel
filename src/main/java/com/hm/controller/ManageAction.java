@@ -1,18 +1,25 @@
 package com.hm.controller;
 
+import com.hm.pojo.Fenlei;
 import com.hm.pojo.User;
+import com.hm.pojo.UserYuding;
+import com.hm.pojo.Yuding;
+import com.hm.service.fenleiservice.IFenleiService;
 import com.hm.service.userservice.IUserService;
+import com.hm.service.yudingservice.IYudingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/ma")
@@ -20,6 +27,10 @@ public class ManageAction {
 	private static final long serialVersionUID = -4304509122548259589L;
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private IYudingService yudingService;
+	@Autowired
+	private IFenleiService fenleiService;
 	//注册
 	//跳转到注册页面method,并携带注册Handler的路径到form表单
 	@RequestMapping(value = "/jumpToRegister")
@@ -134,24 +145,140 @@ public class ManageAction {
 	}
 
 
-		//客房预订
-		@RequestMapping(value = "/jumpToyuding_User")
-		public String jumpToyuding_User() {
+
+
+		//普通用户--预订记录查询
+		@RequestMapping(value = "/yudinglist_user")
+		public String yudingList_User(HttpSession session,ModelMap modelMap){
+
+			User u = (User)session.getAttribute("user");
+			List<UserYuding> userYudings = yudingService.yudingChaXun(u.getId());
+			modelMap.addAttribute("list",userYudings);
+			modelMap.addAttribute("id",u.getId());
 			return "yuding/yudinglist";
 		}
 
+		@RequestMapping(value = "/jumpToyuding_User",method = RequestMethod.GET)
+		//普通用户--预订
+		public String jumpToyuding_User(ModelMap modelMap,HttpSession session,int kefangid){
+			modelMap.addAttribute("url","/ma/yuding_User.action");
+			/*查询预订信息*/
+			User u = (User)session.getAttribute("user");
+			Yuding yuding = yudingService.yudingChaXunByYuDingKeFangIDAndUserID(kefangid,u.getId());
+			modelMap.addAttribute("bean",yuding);
+			return "yuding/yudingupdate";
+		}
+
+		@RequestMapping(value = "/yuding_User")
+		//普通用户--预订
+		public String yuding_User(){
+			/*处理预订事务*/
+			/*What Ever,老子不弄了*/
+			return "";
+		}
+
+		@RequestMapping("/jumpToUserList")
+		/*管理员功能*/
+		//跳转到用户管理
+		public String jumpToUserList(ModelMap modelMap){
+			List<User> users = userService.selectUsers();
+			modelMap.addAttribute("list",users);
+			return "/user/userlist";
+		}
+
+		@RequestMapping("/jumpToAddUser")
+		//跳转到添加新用户
+		public String jumpToAddUser(ModelMap modelMap){
+			modelMap.addAttribute("url","/ma/addUser.action");
+			return "/user/useradd";
+		}
+
+		@RequestMapping("/addUser")
+		@ResponseBody
+		//添加新的用户
+		public String AddUser(User user){
+			int i = userService.addUser(user);
+			if(i>0)
+				return "<script language=javascript>alert('add User Success!!!');</script>";
+			return "<script language=javascript>alert('add User Failed!!!');</script>";
+		}
+
+		@RequestMapping("/jumpToUserUpdate")
+		//跳转到修改用户信息
+		public String jumpToUserUpdate(ModelMap modelMap,int id){
+			modelMap.addAttribute("url","/ma/userUpdate.action");
+			modelMap.addAttribute("id",id);
+			return "/user/userupdate";
+		}
+
+		@RequestMapping("/userUpdate")
+		@ResponseBody
+		//修改用户信息
+		public String userUpdate(User user){
+			int i = userService.updateUser(user);
+			if(i>0){
+				return "<script language=javascript>alert('update User Success!!!');</script>";
+			}
+			return "<script language=javascript>alert('update User Failed!!!');</script>";
+		}
+
+		//删除用户信息
+		@RequestMapping("/userDelete")
+		@ResponseBody
+		//修改用户信息
+		public String userDelete(int id){
+			int i = userService.deleteUser(id);
+			if(i>0){
+				return "<script language=javascript>alert('Delete User Success!!!');</script>";
+			}
+			return "<script language=javascript>alert('Delete User Failed!!!');</script>";
+		}
+/*用户管理结束*/
+
+		//跳转到客房分类管理
+		@RequestMapping("/jumpToKefangFenleiManage")
+		public String jumpToKefangFenleiManage(){
+			return "/fenlei/fenleilist";
+		}
+
+		@RequestMapping("/ajax_selectRoomType")
+		//ajax查询房间类型
+		@ResponseBody
+		public List<Fenlei> ajax_selectRoomType(){
+
+			List<Fenlei> roomLists = fenleiService.selectRoomType();
+
+			return roomLists;
+		}
 
 
+		//跳转到客房信息管理
+		@RequestMapping("/jumpToKefangXinxiManage")
+		public String jumpToKefangXinxiManage(){
+			return "/kaifang/kaifanglist";
+		}
 
+		//跳转到开房管理
+		@RequestMapping("/jumpToKaifangMangage")
+		public String jumpToKaifangMangage(){
+			return "/kefang/kefanglist";
+		}
 
+		//跳转到退房管理
+		@RequestMapping("/jumpToTuifangManage")
+		public String jumpToTuifangManage(){
+			return "/tuifang/tuifanglist";
+		}
 
+		//跳转到开房记录查询
+		@RequestMapping("/jumpToKaifangjiluChaxun")
+		public String jumpToKaifangjiluChaxun(){
+			return "/kfjilu/kfjilulist";
+		}
 
-
-
-
-
-
-
-	
-
+		//跳转到预订记录查询
+		@RequestMapping("/jumpToYudingjiluChaxun")
+		public String jumpToYudingjuluChaxun(){
+			return "/ydjilu/ydjilulist";
+		}
 }
