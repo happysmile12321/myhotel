@@ -5,7 +5,8 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<%--向外部索要资源--%>
+<c:set value="${pageContext.request.contextPath}" var="path" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -75,10 +76,37 @@ function checkform()
 	return true;
 	
 }
-
-
 </script>
+    <%--从内部向外部索要资源--%>
+    <script type="text/javascript" src="${path}/js/jquery-3.2.1.min.js"></script>
 
+    <%--更新页面jquery--%>
+    <script type="text/javascript">
+        $(function () {
+        });
+        $.ajax({
+            url:"http://localhost:8080/javaHM_ssm/ma/ajax_selectRoomType.action",
+            type:"post",
+            dataType:"json",
+            data:{"":""},
+            success:function (data) {
+                // alert(data.leixing)
+                $("#roomType").prepend("<option value='0'>请选择</option>");
+                $.each(data,function (index,res) {
+                    var roomType = data[index].leixing;
+                    var roomId = data[index].id;
+                    $("#roomType").append("<option value=" + roomType +">"+roomType+"</option>");
+                });
+
+            },
+            error:function () {
+                alert("错误！")
+            }
+        });
+
+
+
+    </script>
 </head>
 
 <body>
@@ -94,12 +122,14 @@ function checkform()
     </table></td>
   </tr>
   <tr>
-    <td><table width="80%" border="0" cellspacing="0" cellpadding="0">
+    <td>
+      <table width="80%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="9" background="images/tab_12.gif">&nbsp;</td>
         <td bgcolor="#f3ffe3">
-         <form action="${url }?id=${bean.id }" method="post" onsubmit="return checkform()">
+
         <table width="99%" border="1" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" >
+            <form action="<%=basePath%>${url}?id=${id}" method="post" onsubmit="return checkform()">
 		 <tr>
             <td width="30%" height="26" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">
            房间类型：
@@ -107,13 +137,11 @@ function checkform()
             </td>
             <td width="70%" height="18" background="images/tab_14.gif" class="STYLE1">
             <div align="center" class="STYLE2 STYLE1">
-            <select name="leixing"  id="leixingid" style="width:150">
-   				<c:forEach items="${leixinglist}" var="bean2">
-   				<option value="${bean2.leixing }" <c:if test="${bean2.leixing==leixing}">selected</c:if>>${bean2.leixing }</option>
-   				</c:forEach>
+            <select name="leixing"   id="roomType" style="width:150">
+
    			</select><span style="color: red;">*</span>
             </div></td>
-           
+
           </tr>
          <tr>
             <td width="30%" height="26" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">
@@ -140,13 +168,16 @@ function checkform()
             </div></td>
            
           </tr>
-          
+
+            </form>
         </table>
-        
+
         </td>
         <td width="3" background="images/tab_16.gif">&nbsp;</td>
       </tr>
-    </table></td>
+    </table>
+
+    </td>
   </tr>
   
 </table>

@@ -8,4 +8,17 @@
     <select id="selectRoomType" resultType="com.hm.pojo.Fenlei">
         SELECT * FROM t_fenlei;
     </select>
+    <select id="selectRoomTypeByID" resultType="com.hm.pojo.Fenlei">
+        SELECT * FROM t_fenlei where id = #{id};
+    </select>
+    <delete id="deleteRoomTypeByID" parameterType="Integer">
+        delete from t_fenlei where id = #{id};
+    </delete>
+    <update id="updateRoomTypeByID">
+        UPDATE t_fenlei SET leixing=#{leixing},jiage=#{jiage} WHERE id= #{id};
+    </update>
+    <insert id="addRoomType">
+        INSERT INTO t_fenlei (leixing,jiage,deletestatus,createtime)
+ VALUES(#{leixing},#{jiage},${0},#{createtime});
+    </insert>
 </mapper>

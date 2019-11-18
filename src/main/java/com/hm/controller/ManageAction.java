@@ -31,6 +31,8 @@ public class ManageAction {
 	private IYudingService yudingService;
 	@Autowired
 	private IFenleiService fenleiService;
+	@Autowired
+	private HttpServletRequest request;
 	//注册
 	//跳转到注册页面method,并携带注册Handler的路径到form表单
 	@RequestMapping(value = "/jumpToRegister")
@@ -237,7 +239,9 @@ public class ManageAction {
 
 		//跳转到客房分类管理
 		@RequestMapping("/jumpToKefangFenleiManage")
-		public String jumpToKefangFenleiManage(){
+		public String jumpToKefangFenleiManage(ModelMap modelMap){
+			modelMap.addAttribute("url","/ma/KefangFenleiManage.action");
+			modelMap.addAttribute("url2","/ma/jumpToRoomTypeAdd.action");
 			return "/fenlei/fenleilist";
 		}
 
@@ -250,18 +254,80 @@ public class ManageAction {
 
 			return roomLists;
 		}
+		@RequestMapping("/KefangFenleiManage")
+		@ResponseBody
+		//客房分类管理--ajax形式异步请求
+		public Fenlei ajax_KefangFenleiManage(int id){
+			//将分类id接受过来
+			System.out.println("id:"+id);
+			//根据id查询分类表中的房间类型，房价
+			Fenlei fenlei = fenleiService.selectRoomTypeByID(id);
+			return fenlei;
+		}
+		//类型删除
+		@RequestMapping("/deleteRoomType")
+		@ResponseBody
+		public String deleteRoomType(int id){
+			System.out.println(id);
+			int row = fenleiService.deleteRoomTypeByID(id);
+			if(row > 0){
+				return "<script language=javascript>alert('Delete RoomType Success!!!');</script>";
+			}
+			return "<script language=javascript>alert('Delete RoomType Failed!!!');</script>";
+		}
+		@RequestMapping("/jumpToUpdateRoomType")
+		//跳转到客房分类类型更新页面
+		public String jumpToUpdateRoomType(int id,ModelMap modelMap){
+			modelMap.addAttribute("url","/ma/updateRoomType.action");
+
+			//修改的id号
+			modelMap.addAttribute("id",id);
+			return "/fenlei/fenleiupdate";
+		}
+
+		@RequestMapping("/updateRoomType")
+		@ResponseBody
+		//客房分类类型更新页面
+		public String updateRoomType(String leixing,int jiage,int id){
+
+		/*	System.out.println("进来了,id是：" + request.getParameter("id"));
+			System.out.println("进来了,价格是："+jiage);
+			System.out.println("进来了，类型id是:"+leixing);*/
+			int row =fenleiService.updateFenleiInfoByFenleiID(leixing,jiage,id);
+			if(row>0){
+				return "<script language=javascript>alert('Update RoomType Success!!!');</script>";
+			}
+			return "<script language=javascript>alert('Update RoomType Failed!!!');</script>";
+		}
+		@RequestMapping("/jumpToRoomTypeAdd")
+		//客房分类添加
+		public String jumpToRoomTypeAdd(ModelMap modelMap){
+			modelMap.addAttribute("url","/ma/roomTypeAdd.action");
+			return "/fenlei/fenleiadd";
+		}
+
+		@RequestMapping("/roomTypeAdd")
+		@ResponseBody
+		public String RoomTypeAdd(String leixing,double jiage){
+			int row = fenleiService.addRoomType(leixing,jiage,null);
+			if(row>0){
+				return "<script language=javascript>alert('Insert RoomType Success!!!');</script>";
+			}
+			return "<script language=javascript>alert('Insert RoomType Failed!!!');</script>";
+		}
+
 
 
 		//跳转到客房信息管理
 		@RequestMapping("/jumpToKefangXinxiManage")
 		public String jumpToKefangXinxiManage(){
-			return "/kaifang/kaifanglist";
+			return "/kefang/kefanglist";
 		}
 
 		//跳转到开房管理
 		@RequestMapping("/jumpToKaifangMangage")
 		public String jumpToKaifangMangage(){
-			return "/kefang/kefanglist";
+			return "/kaifang/kaifanglist";
 		}
 
 		//跳转到退房管理
