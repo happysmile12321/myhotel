@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.mapper.kefang.KefangMapper">
+<sql id="selectBaseInfo">
+        t_kefang.`fangjianhao`,t_kefang.`fangjianstatus`,
+      t_fenlei.`jiage`,t_fenlei.`leixing`,t_kefang.id
+</sql>
+<sql id="selectBaseInfo2">
+        t_kefang.`fangjianhao`,
+        t_fenlei.`leixing`
+</sql>
+    <!--动态sql-->
+    <select id="selectKeFangFcenLei" parameterType="com.hm.pojo.KefangFeilei"  resultMap="kefangFeileiMapper">
+SELECT DISTINCT
+<include refid="selectBaseInfo"/>
+FROM t_kefang,t_fenlei
+<where>
+    t_fenlei.`id`=t_kefang.`fenleiid`
+    <if test=" kefang.fangjianhao != null">
+                and   t_kefang.`fangjianhao`= #{kefang.fangjianhao}
+    </if>
+    <if test=" fenlei.leixing != null ">
+            and   t_fenlei.`leixing`= #{fenlei.leixing}
+    </if>
+</where>
+    </select>
+
+    <resultMap id="kefangFeileiMapper" type="com.hm.pojo.KefangFeilei">
+        <id column="id" property="kefang.id"></id>
+        <result column="kefangdeleteStatus" property="kefang.deletestatus"></result>
+        <result column="fangjianhao" property="kefang.fangjianhao"></result>
+        <result column="fangjianstatus" property="kefang.fangjianstatus"></result>
+        <result column="fenleiid" property="fenlei.id"></result>
+        <result column="createtime" property="fenlei.createtime"></result>
+        <result column="fenleideleteStatus" property="fenlei.deletestatus"></result>
+        <result column="jiage" property="fenlei.jiage"></result>
+        <result column="leixing" property="fenlei.leixing"></result>
+    </resultMap>
+
+</mapper>

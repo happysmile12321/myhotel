@@ -72,11 +72,6 @@
   </tr>
   <tr>
     <td>
-      <form action="${url }" method="post">
-        房间编号：<input type="text" name="fangjianhao" value="${fangjianhao }"/>
-        客户身份证号：<input type="text" name="idcard" value="${idcard }"/>
-        <input type="submit" value="查询" />
-      </form>
 
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -97,16 +92,16 @@
 
             <c:forEach items="${list}" var="bean">
               <tr>
-                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kehuname }</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.idcard}</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fenlei.leixing}</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fenlei.jiage }</div></td>
+                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yuding.truename }</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yuding.yudingidcard}</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.leixing}</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.jiage }</div></td>
                 <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fangjianhao }</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${fn:substring(bean.ruzhutime,0, 19)}</div></td>
-                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${fn:substring(bean.tuifangtime,0, 19)}</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.tianshu }</div></td>
-                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.xiaofei }</div></td>
-                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.beizhu }</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kaifang.ruzhutime }</div></td>
+                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kaifang.tuifangtime}</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kaifang.tianshu }</div></td>
+                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kaifang.xiaofei }</div></td>
+                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kaifang.beizhu }</div></td>
               </tr>
             </c:forEach>
 

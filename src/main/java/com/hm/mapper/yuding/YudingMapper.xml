@@ -19,4 +19,65 @@ WHERE t_user.`id`=#{id};
     <select id="selectYudingByKefangIdAndUserID"  resultType="com.hm.pojo.Yuding">
        SELECT * FROM t_yuding WHERE  kefangid=#{kefangid} AND userid=#{userid} ;
     </select>
+
+    <sql id="yudingSelectField">
+
+
+    </sql>
+    <select id="selectYudingAll" parameterType="Integer" resultMap="selectYudingAllMapper">
+SELECT
+t_yuding.`truename`,
+t_yuding.`yudingidcard`,
+t_fenlei.`leixing`,
+t_fenlei.`jiage`,
+t_kefang.`fangjianhao`,
+t_kaifang.`ruzhutime`,
+t_kaifang.`tuifangtime`,
+t_kaifang.`tianshu`,
+t_kaifang.`xiaofei`,
+t_kaifang.`beizhu`
+FROM t_user,t_yuding,t_fenlei,t_kefang,t_kaifang
+WHERE t_user.id=t_yuding.`userid` AND t_yuding.`kefangid`=t_kefang.`id`
+AND t_fenlei.`id` = t_kefang.`fenleiid` AND t_kaifang.`kefangid`=t_kefang.`id`
+    </select>
+    <resultMap id="selectYudingAllMapper" type="com.hm.pojo.UserYudingKefangFenleiKaifang">
+        <result column="truename" property="yuding.truename"></result>
+        <result column="yudingidcard" property="yuding.yudingidcard"></result>
+        <result column="leixing" property="fenlei.leixing"></result>
+        <result column="jiage" property="fenlei.jiage"></result>
+        <result column="fangjianhao" property="kefang.fangjianhao"></result>
+        <result column="ruzhutime" property="kaifang.ruzhutime"></result>
+        <result column="tuifangtime" property="kaifang.tuifangtime"></result>
+        <result column="tianshu" property="kaifang.tianshu"></result>
+        <result column="xiaofei" property="kaifang.xiaofei"></result>
+        <result column="beizhu" property="kaifang.beizhu"></result>
+    </resultMap>
+
+
+
+    <select id="selectYudingAll_real" parameterType="Integer" resultMap="selectYudingAll_realMapper">
+SELECT
+t_yuding.`truename`,
+t_yuding.`yudingidcard`,
+t_fenlei.`leixing`,
+t_fenlei.`jiage`,
+t_kefang.`fangjianhao`,
+t_yuding.`yudingtime`,
+t_yuding.`beizhu`
+FROM t_yuding,t_kefang,t_fenlei
+WHERE t_yuding.`kefangid` = t_kefang.`id` AND t_kefang.`fenleiid`=t_fenlei.id
+;
+
+    </select>
+    <resultMap id="selectYudingAll_realMapper" type="com.hm.pojo.YudingKefangFenlei">
+        <result column="truename" property="yuding.truename"></result>
+        <result column="yudingidcard" property="yuding.yudingidcard"></result>
+        <result column="leixing" property="fenlei.leixing"></result>
+        <result column="jiage" property="fenlei.jiage"></result>
+        <result column="fangjianhao" property="kefang.fangjianhao"></result>
+        <result column="yudingtime" property="yuding.yudingtime"></result>
+        <result column="beizhu" property="yuding.beizhu"></result>
+    </resultMap>
+
+
 </mapper>

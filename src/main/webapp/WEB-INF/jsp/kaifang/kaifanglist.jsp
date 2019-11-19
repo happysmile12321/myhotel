@@ -72,7 +72,7 @@ a:active {
   </tr>
   <tr>
     <td>
-    <form action="${url }" method="post">
+    <%--<form action="${url }" method="post">
     房间编号：<input type="text" name="fangjianhao" value="${fangjianhao }"/>
     房间状态：<input type="text" name="fangjianstatus" value="${fangjianstatus }"/>
     房间类型：<select name="leixing"  style="width:150">
@@ -82,7 +82,7 @@ a:active {
    				</c:forEach>
    			</select>
     <input type="submit" value="查询" />
-    </form>
+    </form>--%>
     
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
@@ -94,7 +94,7 @@ a:active {
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">客房价格</div></td>
             <td  height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2 STYLE1">房间编号</div></td>
             <td height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">房间状态</div></td>
-            <td width="20%" height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">操作</div></td>
+           <%-- <td width="20%" height="18" background="images/tab_14.gif" class="STYLE1"><div align="center" class="STYLE2">操作</div></td>--%>
           </tr>
           
           <c:forEach items="${list}" var="bean">
@@ -102,22 +102,8 @@ a:active {
            
             <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.leixing}</div></td>
              <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.jiage }</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fangjianhao }</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fangjianstatus }</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">
-            	 <c:if test="${bean.fangjianstatus=='已入住'}">
-         			<a href="${url2 }update3?id=${bean.id }">查看</a>
-				</c:if>	 
-						
-            	<c:if test="${bean.fangjianstatus=='空房'}">
-         			<a href="method!kefangupdate3?id=${bean.id }">查看</a>
-         			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         	        <a href="${url2 }update?id=${bean.id }">开房</a>
-				</c:if>	 
-
-        
-
-         
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fangjianhao }</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fangjianstatus }</div></td>
             </div></td>
             
             </tr>

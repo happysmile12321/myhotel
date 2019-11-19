@@ -89,13 +89,13 @@
 
             <c:forEach items="${list}" var="bean">
               <tr>
-                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.truename }</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yudingidcard}</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fenlei.leixing}</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fenlei.jiage }</div></td>
+                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yuding.truename }</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yuding.yudingidcard }</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.leixing }</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.fenlei.jiage }</div></td>
                 <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.kefang.fangjianhao }</div></td>
-                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yudingtime }</div></td>
-                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.beizhu }</div></td>
+                <td  height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yuding.yudingtime }</div></td>
+                <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">${bean.yuding.beizhu }</div></td>
               </tr>
             </c:forEach>
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.mapper.kaifang.KaifangMapper">
+
+
+
+    <select id="selectKaiFang" resultMap="map">
+SELECT
+t_fenlei.`leixing`,
+t_fenlei.`jiage`,
+t_kefang.`fangjianhao`,
+t_kefang.`fangjianstatus`
+ FROM t_kaifang,t_kefang,t_fenlei
+WHERE t_kaifang.`kefangid` = t_kefang.`id` AND t_fenlei.`id` = t_kefang.`fenleiid`;
+    </select>
+    <resultMap id="map" type="com.hm.pojo.KefangKaifangFenlei">
+        <result column="leixing" property="fenlei.leixing"></result>
+        <result column="jiage" property="fenlei.jiage"></result>
+        <result column="fangjianhao" property="kefang.fangjianhao"></result>
+        <result column="fangjianstatus" property="kefang.fangjianstatus"></result>
+    </resultMap>
+
+    <select id="selectTuiFang" resultMap="map2">
+        SELECT
+t_kaifang.`kehuname`,
+t_kaifang.`idcard`,
+t_kaifang.`yajin`,
+t_kefang.`fangjianhao`,
+t_fenlei.`jiage`,
+t_kaifang.`ruzhutime`,
+t_kaifang.`jiezhangstatus`,
+t_kaifang.`beizhu`
+FROM t_kaifang,t_kefang,t_fenlei
+WHERE t_kaifang.`kefangid`=t_kefang.`id` AND t_kefang.`fenleiid` = t_fenlei.`id`
+ ;
+    </select>
+
+    <resultMap id="map2" type="com.hm.pojo.KefangKaifangFenlei">
+        <result column="kehuname" property="kaifang.kehuname"></result>
+        <result column="idcard" property="kaifang.idcard"></result>
+        <result column="yajin" property="kaifang.yajin"></result>
+        <result column="fangjianhao" property="kefang.fangjianhao"></result>
+        <result column="jiage" property="fenlei.jiage"></result>
+        <result column="ruzhutime" property="kaifang.ruzhutime"></result>
+        <result column="jiezhangstatus" property="kaifang.jiezhangstatus"></result>
+        <result column="beizhu" property="kaifang.beizhu"></result>
+    </resultMap>
+
+</mapper>

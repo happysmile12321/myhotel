@@ -4,8 +4,8 @@ public class Kefang {
 
 	private int id;//主键
 	
-	
-	private Fenlei fenlei;//关联分类的id外键
+	//不用关联查询了，用mybatis给我们映射
+	//private Fenlei fenlei;//关联分类的id外键
 
 	private String fangjianhao;//房间编号
 	
@@ -16,15 +16,6 @@ public class Kefang {
 	
 	private int deletestatus;// 房间信息状态 0表示未删除 1表示删除
 
-	
-	
-	public int getDeletestatus() {
-		return deletestatus;
-	}
-
-	public void setDeletestatus(int deletestatus) {
-		this.deletestatus = deletestatus;
-	}
 
 	public int getId() {
 		return id;
@@ -32,14 +23,6 @@ public class Kefang {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Fenlei getFenlei() {
-		return fenlei;
-	}
-
-	public void setFenlei(Fenlei fenlei) {
-		this.fenlei = fenlei;
 	}
 
 	public String getFangjianhao() {
@@ -58,8 +41,6 @@ public class Kefang {
 		this.miaoshu = miaoshu;
 	}
 
-	
-
 	public String getFangjianstatus() {
 		return fangjianstatus;
 	}
@@ -68,8 +49,11 @@ public class Kefang {
 		this.fangjianstatus = fangjianstatus;
 	}
 
-	
-	
-	
-	
+	public int getDeletestatus() {
+		return deletestatus;
+	}
+
+	public void setDeletestatus(int deletestatus) {
+		this.deletestatus = deletestatus;
+	}
 }

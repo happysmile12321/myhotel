@@ -1,10 +1,10 @@
 package com.hm.controller;
 
-import com.hm.pojo.Fenlei;
-import com.hm.pojo.User;
-import com.hm.pojo.UserYuding;
-import com.hm.pojo.Yuding;
+import com.hm.pojo.*;
 import com.hm.service.fenleiservice.IFenleiService;
+import com.hm.service.kaifangservice.IKaiFangService;
+import com.hm.service.kefangservice.IKeFangService;
+import com.hm.service.tuifangservice.ITuiFangService;
 import com.hm.service.userservice.IUserService;
 import com.hm.service.yudingservice.IYudingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,12 @@ public class ManageAction {
 	private IYudingService yudingService;
 	@Autowired
 	private IFenleiService fenleiService;
+	@Autowired
+	private IKeFangService keFangService;
+	@Autowired
+	private IKaiFangService kaiFangService;
+	@Autowired
+	private ITuiFangService tuiFangService;
 	@Autowired
 	private HttpServletRequest request;
 	//注册
@@ -175,7 +181,6 @@ public class ManageAction {
 		//普通用户--预订
 		public String yuding_User(){
 			/*处理预订事务*/
-			/*What Ever,老子不弄了*/
 			return "";
 		}
 
@@ -317,34 +322,90 @@ public class ManageAction {
 		}
 
 
-
 		//跳转到客房信息管理
 		@RequestMapping("/jumpToKefangXinxiManage")
-		public String jumpToKefangXinxiManage(){
+		public String jumpToKefangXinxiManage(ModelMap modelMap){
+			modelMap.addAttribute("url","/ma/kefangXinxiManage.action");
 			return "/kefang/kefanglist";
 		}
 
-		//跳转到开房管理
+		@RequestMapping("/ajax_kefangfeilei")
+		@ResponseBody
+		//ajax请求的方法，查询数据到两个select
+		public List<KefangFeilei> ajax_kefangfeilei(ModelMap modelMap){
+			KefangFeilei kefangFeilei = new KefangFeilei();
+			Kefang kefang = new Kefang();
+			kefang.setFangjianhao(null);
+			Fenlei fenlei = new Fenlei();
+			fenlei.setLeixing(null);
+			kefangFeilei.setKefang(kefang);
+			kefangFeilei.setFenlei(fenlei);
+			List <KefangFeilei>kefangFeileiList = keFangService.selectKeFang(kefangFeilei);
+			return kefangFeileiList;
+		}
+
+
+
+
+	//ajax请求的方法，查询的数据返回的是List<KefangFeileing>
+		@RequestMapping(value = "/ajax2_kefangfeilei",method = RequestMethod.POST)
+		@ResponseBody
+		public  List<KefangFeilei> ajax2_kefangfeilei(String kefang_fangjianhao, String fenlei_leixing, ModelMap modelMap) {
+			//System.out.println("房间编号：" + kefang_fangjianhao);
+			//System.out.println("类型：" + fenlei_leixing);
+			KefangFeilei kefangFeilei = new KefangFeilei();
+			Kefang kefang = new Kefang();
+			kefang.setFangjianhao(kefang_fangjianhao);
+			Fenlei fenlei = new Fenlei();
+			fenlei.setLeixing(fenlei_leixing);
+			if(kefang_fangjianhao.equals("0")){
+				kefang_fangjianhao = null;
+				kefang.setFangjianhao(kefang_fangjianhao);
+			}
+			if(fenlei_leixing.equals("0")){
+				fenlei_leixing = null;
+				fenlei.setLeixing(fenlei_leixing);
+			}
+			kefangFeilei.setKefang(kefang);
+			kefangFeilei.setFenlei(fenlei);
+			List<KefangFeilei> kefangFeileiList = keFangService.selectKeFang(kefangFeilei);
+			return kefangFeileiList;
+		}
+
+
+
+
+
+		//跳转到开房管理页面
 		@RequestMapping("/jumpToKaifangMangage")
-		public String jumpToKaifangMangage(){
+		public String jumpToKaifangMangage(ModelMap modelMap){
+			List<KefangKaifangFenlei> kefangKaifangFenleis = kaiFangService.selectKaiFang();
+			modelMap.addAttribute("list",kefangKaifangFenleis);
+			System.out.println(kefangKaifangFenleis);
 			return "/kaifang/kaifanglist";
 		}
 
 		//跳转到退房管理
 		@RequestMapping("/jumpToTuifangManage")
-		public String jumpToTuifangManage(){
+		public String jumpToTuifangManage(ModelMap modelMap){
+			List<KefangKaifangFenlei> kefangKaifangFenleis = tuiFangService.selectTuiFang();
+			modelMap.addAttribute("list",kefangKaifangFenleis);
 			return "/tuifang/tuifanglist";
 		}
 
 		//跳转到开房记录查询
 		@RequestMapping("/jumpToKaifangjiluChaxun")
-		public String jumpToKaifangjiluChaxun(){
+		public String jumpToKaifangjiluChaxun(ModelMap modelMap){
+			List<UserYudingKefangFenleiKaifang> userYudings = yudingService.yudingChaXunAll();
+			modelMap.addAttribute("list",userYudings);
 			return "/kfjilu/kfjilulist";
 		}
 
 		//跳转到预订记录查询
 		@RequestMapping("/jumpToYudingjiluChaxun")
-		public String jumpToYudingjuluChaxun(){
+		public String jumpToYudingjuluChaxun(ModelMap modelMap){
+			List<YudingKefangFenlei> yudingKefangFenleis = yudingService.yudingChaXunAll_real();
+			modelMap.addAttribute("list",yudingKefangFenleis);
 			return "/ydjilu/ydjilulist";
 		}
 }
